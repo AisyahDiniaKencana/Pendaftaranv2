@@ -8,23 +8,57 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
+
 import java.util.Calendar;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
 
     EditText tg;
 
     Calendar c;
     DatePicker dpd;
-    private Object EditText;
+    private EditText EditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
+        EditText = findViewById(R.id.tanggallahir);
+
+        findViewById(R.id.tanggallahir).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDailog();
+            }
+        });
+    }
+
+    private void showDatePickerDailog(){
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                this,
+                this,
+                Calendar.getInstance().get(Calendar.YEAR),
+                Calendar.getInstance().get(Calendar.MONTH),
+                Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
+        );
+        datePickerDialog.show();
+    }
 
 
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        String date = "day/month/year: " + dayOfMonth + "/" + month + "/" + year;
+        tg.setText(date);
+    }
 
+    public android.widget.EditText getEditText() {
+        return EditText;
+    }
+
+    public void setEditText(android.widget.EditText editText) {
+        EditText = editText;
+    }
+}
 //        EditText = (EditText)findViewById(R.id.tanggallahir);
 //
 //        c = Calendar.getInstance();
@@ -46,5 +80,3 @@ public class MainActivity extends AppCompatActivity {
 //                dpd.show();
 //            }
 //        });
-    }
-}
